@@ -3,16 +3,23 @@ package com.example.glidemanager;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.blankj.utilcode.util.FileIOUtils;
+import com.blankj.utilcode.util.FileUtils;
+import com.blankj.utilcode.util.SnackbarUtils;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.example.glidemanager.databinding.ActivityMainBinding;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -54,7 +61,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        binding.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String absolutePath = getExternalCacheDir().getAbsolutePath();
 
+                boolean isSave = FileIOUtils.writeFileFromString(getExternalCacheDir() + File.separator + "save", "测试没有权限的问题");
+                SnackbarUtils.with(binding.save).setMessage(absolutePath + "isSave" + isSave).show();
+
+            }
+        });
 
 
     }
